@@ -7,9 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Binary Wang
  */
 @SpringBootApplication
-public class WechatMpDemoApplication {
+public class WechatMpApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(WechatMpDemoApplication.class, args);
+        SpringApplication.run(WechatMpApplication.class, args);
     }
 }
