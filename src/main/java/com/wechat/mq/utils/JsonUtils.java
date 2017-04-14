@@ -16,6 +16,10 @@ public class JsonUtils {
         JSON.configure(SerializationFeature.INDENT_OUTPUT, Boolean.TRUE);
     }
 
+    private JsonUtils() {
+
+    }
+
     public static String toJson(Object obj) {
         try {
             return JSON.writeValueAsString(obj);

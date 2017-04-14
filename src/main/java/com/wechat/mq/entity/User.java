@@ -1,6 +1,7 @@
 package com.wechat.mq.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
@@ -8,7 +9,7 @@ import java.util.Set;
  * Created by akinoneko on 2017/4/14.
  */
 @Entity
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -50,7 +51,7 @@ public class User {
     /**
      * 添加的公众号列表
      */
-    @OneToMany(cascade = {CascadeType.ALL},fetch = FetchType.LAZY,mappedBy = "user")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "user")
     private Set<WechatMqConfig> wechatMqConfigs;
 
     public Integer getId() {

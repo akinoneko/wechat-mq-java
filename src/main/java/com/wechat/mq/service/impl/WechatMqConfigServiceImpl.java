@@ -1,5 +1,6 @@
 package com.wechat.mq.service.impl;
 
+import com.wechat.mq.annotation.ServiceLog;
 import com.wechat.mq.entity.WechatMqConfig;
 import com.wechat.mq.repository.WechatMqConfigRepository;
 import com.wechat.mq.service.WechatMqConfigService;
@@ -18,6 +19,7 @@ public class WechatMqConfigServiceImpl implements WechatMqConfigService {
     private WechatMqConfigRepository wechatMqConfigRepository;
 
     @Override
+    @ServiceLog
     public WechatMqConfig getCurrentWechatMqConfig(Integer configId) {
         return wechatMqConfigRepository.findOne(configId);
     }

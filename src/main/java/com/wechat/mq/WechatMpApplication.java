@@ -9,7 +9,7 @@ import org.springframework.cache.annotation.EnableCaching;
  */
 @SpringBootApplication
 @EnableCaching
-public class WechatMpApplication {
+           public class WechatMpApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(WechatMpApplication.class, args);
