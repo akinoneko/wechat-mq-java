@@ -1,5 +1,7 @@
 package com.wechat.mq.controller;
 
+import com.wechat.mq.entity.WechatMqConfig;
+import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * @author Binary Wang
  */
 @RestController
-@RequestMapping("/wechat/portal")
+@RequestMapping("/wechat/portal/{id}")
 public class WechatController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -31,10 +33,21 @@ public class WechatController {
             @RequestParam(name = "timestamp",
                     required = false) String timestamp,
             @RequestParam(name = "nonce", required = false) String nonce,
-            @RequestParam(name = "echostr", required = false) String echostr) {
-
+            @RequestParam(name = "echostr", required = false) String echostr,
+            @PathVariable(name = "id") Integer id) {
         this.logger.info("\n接收到来自微信服务器的认证消息：[{}, {}, {}, {}]", signature,
                 timestamp, nonce, echostr);
+
+        //===========================
+        //使用数据库来读取每次请求进来的用户的微信配置,注入service,测试开发阶段暂时写死
+        WechatMqConfig config = new WechatMqConfig();
+        WxMpInMemoryConfigStorage configStorage = new WxMpInMemoryConfigStorage();
+        configStorage.setAppId(config.getAppId());
+        configStorage.setSecret(config.getSecret());
+        configStorage.setToken(config.getToken());
+        configStorage.setAesKey(config.getAesKey());
+        this.wxService.setWxMpConfigStorage(configStorage);
+        //===========================
 
         if (StringUtils.isAnyBlank(signature, timestamp, nonce, echostr)) {
             throw new IllegalArgumentException("请求参数非法，请核实!");
@@ -55,11 +68,24 @@ public class WechatController {
                        @RequestParam(name = "encrypt_type",
                                required = false) String encType,
                        @RequestParam(name = "msg_signature",
-                               required = false) String msgSignature) {
+                               required = false) String msgSignature,
+                       @PathVariable(name = "id") Integer id) {
         this.logger.info(
                 "\n接收微信请求：[signature=[{}], encType=[{}], msgSignature=[{}],"
                         + " timestamp=[{}], nonce=[{}], requestBody=[\n{}\n] ",
                 signature, encType, msgSignature, timestamp, nonce, requestBody);
+        this.logger.info("获取注册用户[{}]的微信请求信息", id);
+
+        //===========================
+        //使用数据库来读取每次请求进来的用户的微信配置,注入service,测试开发阶段暂时写死
+        WechatMqConfig config = new WechatMqConfig();
+        WxMpInMemoryConfigStorage configStorage = new WxMpInMemoryConfigStorage();
+        configStorage.setAppId(config.getAppId());
+        configStorage.setSecret(config.getSecret());
+        configStorage.setToken(config.getToken());
+        configStorage.setAesKey(config.getAesKey());
+        this.wxService.setWxMpConfigStorage(configStorage);
+        //===========================
 
         if (!this.wxService.checkSignature(timestamp, nonce, signature)) {
             throw new IllegalArgumentException("非法请求，可能属于伪造的请求！");

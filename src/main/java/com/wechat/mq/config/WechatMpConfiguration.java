@@ -21,19 +21,14 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConditionalOnClass(WxMpService.class)
-@EnableConfigurationProperties(WechatMpProperties.class)
 public class WechatMpConfiguration {
-    @Autowired
-    private WechatMpProperties properties;
 
     @Bean
     @ConditionalOnMissingBean
     public WxMpConfigStorage configStorage() {
+        //此处返回零配置的对象
+        //TODO 修改此处的逻辑
         WxMpInMemoryConfigStorage configStorage = new WxMpInMemoryConfigStorage();
-        configStorage.setAppId(this.properties.getAppId());
-        configStorage.setSecret(this.properties.getSecret());
-        configStorage.setToken(this.properties.getToken());
-        configStorage.setAesKey(this.properties.getAesKey());
         return configStorage;
     }
 
