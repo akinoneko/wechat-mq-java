@@ -1,7 +1,7 @@
-package com.wechat.mq.aspect;
+package com.wechat.common.aspect;
 
 import com.alibaba.fastjson.JSON;
-import com.wechat.mq.annotation.ServiceLog;
+import com.wechat.common.annotation.ServiceLog;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -20,7 +20,7 @@ public class ServiceLogAspect {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ServiceLogAspect.class);
 
-    @Pointcut("@annotation(com.wechat.mq.annotation.ServiceLog)")
+    @Pointcut("@annotation(com.wechat.common.annotation.ServiceLog)")
     public void serviceMethodLog() {
     }
 

@@ -3,6 +3,7 @@ package com.wechat.mq.repository;
 import com.wechat.mq.entity.WechatMqConfig;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -14,4 +15,7 @@ public interface WechatMqConfigRepository extends CrudRepository<WechatMqConfig,
 
     @CachePut(key = "#p0.id")
     WechatMqConfig save(WechatMqConfig wechatMqConfig);
+
+    @Cacheable(key = "#p0")
+    WechatMqConfig findOne(Integer id);
 }

@@ -1,16 +1,18 @@
 package com.wechat.mq.service.impl;
 
-import com.wechat.mq.annotation.ServiceLog;
+import com.wechat.common.annotation.ServiceLog;
 import com.wechat.mq.entity.WechatMqConfig;
 import com.wechat.mq.repository.WechatMqConfigRepository;
 import com.wechat.mq.service.WechatMqConfigService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by akinoneko on 2017/4/14.
  */
+@Service
 public class WechatMqConfigServiceImpl implements WechatMqConfigService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WechatMqConfigServiceImpl.class);

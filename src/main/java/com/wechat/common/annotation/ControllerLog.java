@@ -1,4 +1,4 @@
-package com.wechat.mq.annotation;
+package com.wechat.common.annotation;
 
 import java.lang.annotation.*;
 

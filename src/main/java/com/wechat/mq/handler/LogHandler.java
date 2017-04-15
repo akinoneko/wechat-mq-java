@@ -1,6 +1,6 @@
 package com.wechat.mq.handler;
 
-import com.wechat.mq.utils.JsonUtils;
+import com.wechat.common.utils.JsonUtils;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;

@@ -1,4 +1,4 @@
-package com.wechat.mq.utils;
+package com.wechat.common.utils;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;

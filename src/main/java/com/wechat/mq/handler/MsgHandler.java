@@ -1,7 +1,7 @@
 package com.wechat.mq.handler;
 
 import com.wechat.mq.builder.TextBuilder;
-import com.wechat.mq.utils.JsonUtils;
+import com.wechat.common.utils.JsonUtils;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;

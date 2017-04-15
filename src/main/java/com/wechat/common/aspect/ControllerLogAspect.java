@@ -1,7 +1,7 @@
-package com.wechat.mq.aspect;
+package com.wechat.common.aspect;
 
 import com.alibaba.fastjson.JSON;
-import com.wechat.mq.annotation.ControllerLog;
+import com.wechat.common.annotation.ControllerLog;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -23,7 +23,7 @@ public class ControllerLogAspect {
     private static final Logger LOGGER = LoggerFactory.getLogger(ControllerLogAspect.class);
 
     //controller调用日志记录点
-    @Pointcut("@annotation(com.wechat.mq.annotation.ControllerLog)")
+    @Pointcut("@annotation(com.wechat.common.annotation.ControllerLog)")
     public void controllerMethodLog() {
 
     }

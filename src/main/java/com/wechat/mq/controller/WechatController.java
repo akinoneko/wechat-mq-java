@@ -1,6 +1,7 @@
 package com.wechat.mq.controller;
 
 import com.wechat.mq.entity.WechatMqConfig;
+import com.wechat.mq.service.WechatMqConfigService;
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -26,6 +27,9 @@ public class WechatController {
     @Autowired
     private WxMpMessageRouter router;
 
+    @Autowired
+    private WechatMqConfigService wechatMqConfigService;
+
     @GetMapping(produces = "text/plain;charset=utf-8")
     public String authGet(
             @RequestParam(name = "signature",
@@ -38,16 +42,14 @@ public class WechatController {
         this.logger.info("\n接收到来自微信服务器的认证消息：[{}, {}, {}, {}]", signature,
                 timestamp, nonce, echostr);
 
-        //===========================
         //使用数据库来读取每次请求进来的用户的微信配置,注入service,测试开发阶段暂时写死
-        WechatMqConfig config = new WechatMqConfig();
+        WechatMqConfig config = wechatMqConfigService.getCurrentWechatMqConfig(id);
         WxMpInMemoryConfigStorage configStorage = new WxMpInMemoryConfigStorage();
         configStorage.setAppId(config.getAppId());
         configStorage.setSecret(config.getSecret());
         configStorage.setToken(config.getToken());
         configStorage.setAesKey(config.getAesKey());
         this.wxService.setWxMpConfigStorage(configStorage);
-        //===========================
 
         if (StringUtils.isAnyBlank(signature, timestamp, nonce, echostr)) {
             throw new IllegalArgumentException("请求参数非法，请核实!");
@@ -74,18 +76,15 @@ public class WechatController {
                 "\n接收微信请求：[signature=[{}], encType=[{}], msgSignature=[{}],"
                         + " timestamp=[{}], nonce=[{}], requestBody=[\n{}\n] ",
                 signature, encType, msgSignature, timestamp, nonce, requestBody);
-        this.logger.info("获取注册用户[{}]的微信请求信息", id);
 
-        //===========================
-        //使用数据库来读取每次请求进来的用户的微信配置,注入service,测试开发阶段暂时写死
-        WechatMqConfig config = new WechatMqConfig();
+        //使用数据库来读取每次请求进来的用户的微信配置,注入service
+        WechatMqConfig config = wechatMqConfigService.getCurrentWechatMqConfig(id);
         WxMpInMemoryConfigStorage configStorage = new WxMpInMemoryConfigStorage();
         configStorage.setAppId(config.getAppId());
         configStorage.setSecret(config.getSecret());
         configStorage.setToken(config.getToken());
         configStorage.setAesKey(config.getAesKey());
         this.wxService.setWxMpConfigStorage(configStorage);
-        //===========================
 
         if (!this.wxService.checkSignature(timestamp, nonce, signature)) {
             throw new IllegalArgumentException("非法请求，可能属于伪造的请求！");

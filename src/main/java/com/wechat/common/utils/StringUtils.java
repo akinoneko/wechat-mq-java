@@ -1,4 +1,4 @@
-package com.wechat.mq.utils;
+package com.wechat.common.utils;
 
 import java.util.Random;
 

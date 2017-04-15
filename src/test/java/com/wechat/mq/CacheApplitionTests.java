@@ -1,19 +1,14 @@
 package com.wechat.mq;
 
-import com.wechat.mq.entity.User;
-import com.wechat.mq.entity.WechatMqConfig;
+import com.wechat.common.service.CacheService;
 import com.wechat.mq.repository.UserRepository;
 import com.wechat.mq.repository.WechatMqConfigRepository;
-import com.wechat.mq.utils.MD5Utils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Date;
-import java.util.HashSet;
 
 /**
  * Created by akinoneko on 2017/3/20.
@@ -27,8 +22,13 @@ public class CacheApplitionTests {
     private UserRepository userRepository;
     @Autowired
     private WechatMqConfigRepository wechatMqConfigRepository;
+    @Autowired
+    private CacheService cacheService;
+
     @Test
     public void test() {
+//        cacheService.setKeyValue("123","12321321",120);
+//        System.err.println(cacheService.getString("123"));
 //        User user = new User();
 //        user.setUser("zyy");
 //        user.setUpdateTime(new Date());
