@@ -43,7 +43,7 @@ public class WechatUserServiceImpl implements WechatUserService {
             wechatUser.setNickname(user.getNickname());
             wechatUser.setOpenId(user.getOpenId());
         }
-        wechatUser.setLabel(label);
+        wechatUser.setLabel(label == null ? wechatUser.getLabel() : label);
         wechatUser.setLatitude(latitude);
         wechatUser.setLongitude(longitude);
         wechatUserRepository.save(wechatUser);
