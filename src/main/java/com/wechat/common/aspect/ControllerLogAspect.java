@@ -29,7 +29,7 @@ public class ControllerLogAspect {
     }
 
     @Before("controllerMethodLog()")
-    public void doServiceBefore(JoinPoint joinPoint) {
+    public void doControllerBefore(JoinPoint joinPoint) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
                 .currentRequestAttributes()).getRequest();
         String ip = request.getRemoteAddr();
@@ -53,12 +53,12 @@ public class ControllerLogAspect {
     }
 
     @Around("controllerMethodLog()")
-    public Object doServiceAround(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object doControllerAround(ProceedingJoinPoint joinPoint) throws Throwable {
         return joinPoint.proceed();
     }
 
     @After("controllerMethodLog()")
-    public void doServiceAfter(JoinPoint joinPoint) {
+    public void doControllerAfter(JoinPoint joinPoint) {
 
     }
 

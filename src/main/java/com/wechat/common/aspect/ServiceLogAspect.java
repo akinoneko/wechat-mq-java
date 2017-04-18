@@ -25,7 +25,23 @@ public class ServiceLogAspect {
     }
 
     @Before("serviceMethodLog()")
-    public void doServiceBefore(JoinPoint joinPoint){
+    public void doServiceBefore(JoinPoint joinPoint) {
+        String targetName = joinPoint.getTarget().getClass().getName();
+        String methodName = targetName + "." + joinPoint.getSignature().getName();
+        String params = JSON.toJSONString(joinPoint.getArgs());
+        StringBuffer message = new StringBuffer();
+        try {
+            message.append("\r\n=====Service前置通知开始=====")
+                    .append("\r\n请求方法:").append(methodName)
+                    .append("\r\n请求参数:").append(params)
+                    .append("\r\n请求描述:").append(getServiceMethodDescription(joinPoint))
+                    .append("\r\n=====Service前置通知结束=====");
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Service方法参数拦截打印:{}", message.toString());
+            }
+        } catch (Exception e) {
+            LOGGER.error("异常信息:{}", e.getMessage());
+        }
 
     }
 
@@ -36,7 +52,7 @@ public class ServiceLogAspect {
         long start = System.currentTimeMillis();
         Object object = joinPoint.proceed();
         long executeTime = System.currentTimeMillis() - start;
-        LOGGER.info("方法<{}>执行时间{}ms", methodName, executeTime);
+        LOGGER.info("方法[{}]执行时间{}ms", methodName, executeTime);
         return object;
     }
 
